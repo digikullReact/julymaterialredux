@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from 'uuid';
+
 
 const initialState={
     todos:[]
@@ -11,13 +13,19 @@ const todo=createSlice({
     reducers:{
         // this is an action
         addTodo:function(state,action){
-            state.todos.push(action.payload);
+            // object instead
+            state.todos.push({name:action.payload,id:uuidv4()});
+
+        },
+        deleteTodo:function(state,action){
+            // object instead
+            state.todos=state.todos.filter(ele=>ele.id!=action.payload)
 
         }
     }
 
 })
 
-export const {addTodo}=todo.actions
+export const {addTodo,deleteTodo}=todo.actions
 
 export default todo.reducer

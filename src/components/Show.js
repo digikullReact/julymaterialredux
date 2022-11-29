@@ -15,7 +15,8 @@ import Typography from '@mui/material/Typography';
 import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Avatar from '@mui/material/Avatar';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import {deleteTodo} from "../slices/todo";
 
 
 
@@ -29,6 +30,13 @@ const Demo = styled('div')(({ theme }) => ({
 const Show = (props) => {
     const [dense, setDense] = React.useState(false);
     const [secondary, setSecondary] = React.useState(false);
+    const dispatch=useDispatch();
+
+    const deleteData=(id)=>{
+      //debugger;
+      dispatch(deleteTodo(id));
+
+    }
 
     const todo=useSelector(state=>state.todo)
   return (
@@ -42,8 +50,9 @@ const Show = (props) => {
 
               {todo.todos.map(ele=>(
                 <ListItem
+                key={ele.id}
                 secondaryAction={
-                  <IconButton edge="end" aria-label="delete">
+                  <IconButton edge="end" aria-label="delete"  onClick={()=>deleteData(ele.id)}>
                     <DeleteIcon />
                   </IconButton>
                 }
@@ -54,7 +63,7 @@ const Show = (props) => {
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primary={ele}
+                  primary={ele.name}
                   secondary={secondary ? 'Secondary text' : null}
                 />
               </ListItem>
