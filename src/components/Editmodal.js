@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import dayjs, { Dayjs } from 'dayjs';
 import moment from 'moment';
 import Stack from '@mui/material/Stack';
-import {handleemptyState} from "../slices/todo";
+import {EditData, handleemptyState} from "../slices/todo";
 import { useDispatch,useSelector } from 'react-redux';
 
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -29,14 +29,15 @@ const style = {
 
 export default function EditModal(props) {
   const todoData=useSelector(state=>state.todo)
+  const dispatch=useDispatch();
 
   const [state,setState]=useState({
     name:"",
-    date:moment().format("YYYY-MM-DD").toString()
+    date:""
   });
 
   const handleChange=(event)=>{
-    //setState({...state,name:event.target.value});
+    setState({...state,name:event.target.value});
    // dispatch(handleemptyState({name:"name",value:event.target.value}));
 
 
@@ -44,11 +45,20 @@ export default function EditModal(props) {
 
   const handleDateChange = (newValue) => {
     // newValue is a material ui date
-  //  console.log(newValue.toString())
-   //setState({...state,date:newValue});
+   /// console.log(newValue.prototype.getDate())
+
+// try to edit the date
+
+   setState({...state,date:moment(newValue).format("YYYY-MM-DD").toString()});
    //dispatch(handleemptyState({name:"date",value:moment(newValue.toString()).format("YYYY-MM-DD")}));
 
   };
+
+  const ediDirectlyIntheStore=()=>{
+    state.id=todoData.editData.id
+    dispatch(EditData(state))
+
+  }
 
   return (
     <div>
@@ -65,13 +75,13 @@ export default function EditModal(props) {
 
 <LocalizationProvider dateAdapter={AdapterDayjs}>
 <Stack spacing={4}  style={{marginTop:"20px"}}>
-<TextField id="outlined-basic" label="Todo" variant="outlined" value={todoData.editData.name}  onChange={handleChange}/> <br></br>
+<TextField id="outlined-basic" label="Todo" variant="outlined" value={state.name.length>0?state.name:todoData.editData.name}  onChange={handleChange}/> <br></br>
 <DesktopDatePicker
  
 
           label="End Date"
           inputFormat="YYYY-MM-DD"
-          value={todoData.editData.date}
+          value={state.date.length>0?state.date.length:todoData.editData.date}
           onChange={handleDateChange}
           renderInput={(params) => <TextField {...params} />}
         /> 
@@ -81,7 +91,7 @@ export default function EditModal(props) {
 </LocalizationProvider><br></br>
 
 
-<Button variant="contained" style={{marginTop:"20px"}} onClick={()=>props.addtodoEvent(state)}>Edit Todo</Button>
+<Button variant="contained" style={{marginTop:"20px"}} onClick={ediDirectlyIntheStore}>Edit Todo</Button>
 
 
 

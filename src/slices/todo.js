@@ -57,14 +57,27 @@ const todo=createSlice({
         },
 
         handlePopupEditData:function(state,action){
-            debugger;
             state.editData=action.payload
 
-        }
+        },
+
+        // this will edit the data in our list
+
+      EditData:function(state,action){
+
+        
+            //state.editData=action.payload
+
+            // first filter out the old data
+           let filtered= state.todos.filter(ele=>ele.id!=action.payload.id);
+           filtered.push(action.payload);
+           state.todos=filtered;
+
+        },
     }
 
 })
 
-export const {addTodo,deleteTodo,handleemptyState,handlePopupEditData}=todo.actions
+export const {addTodo,deleteTodo,handleemptyState,handlePopupEditData,EditData}=todo.actions
 
 export default todo.reducer
