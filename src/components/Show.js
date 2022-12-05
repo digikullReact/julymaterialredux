@@ -67,7 +67,7 @@ const Show = (props) => {
                   <>  <IconButton edge="end" aria-label="delete"  onClick={()=>deleteData(i)}>
                   <DeleteIcon />
                 </IconButton>
-                  <IconButton edge="end" aria-label="delete"  onClick={()=>props.handleModalOpen(i)}>
+                  <IconButton edge="end" aria-label="delete"  onClick={()=>props.handleModalOpen(ele)}>
                   <BrushIcon />
                 </IconButton></>
                 

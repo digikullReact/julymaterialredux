@@ -8,6 +8,12 @@ const initialState={
     emptyState:{
         name:"",
         date:moment().format("YYYY-MM-DD")
+    },
+
+    editData:{
+        name:"",
+        date:moment().format("YYYY-MM-DD")
+
     }
 
 }
@@ -48,11 +54,17 @@ const todo=createSlice({
             // object instead
            // state.todos=state.todos.filter(ele=>ele.id!=action.payload)
 
+        },
+
+        handlePopupEditData:function(state,action){
+            debugger;
+            state.editData=action.payload
+
         }
     }
 
 })
 
-export const {addTodo,deleteTodo,handleemptyState}=todo.actions
+export const {addTodo,deleteTodo,handleemptyState,handlePopupEditData}=todo.actions
 
 export default todo.reducer
