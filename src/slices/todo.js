@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import moment from "moment";
 import { v4 as uuidv4 } from 'uuid';
+import { fetchGoogleBooks, fetchProducts } from "../thunk";
 
 
 const initialState={
     todos:[],
+    apiData:[],
     emptyState:{
         name:"",
         date:moment().format("YYYY-MM-DD")
@@ -46,7 +48,7 @@ const todo=createSlice({
         handleemptyState:function(state,action){
             console.log(action.payload);
 
-           // debugger;
+        // debugger;
 
             //debugger;
             state.emptyState[action.payload.name]=action.payload.value;
@@ -74,6 +76,38 @@ const todo=createSlice({
            state.todos=filtered;
 
         },
+    },
+    extraReducers:(builder)=>{
+        builder.addCase(fetchProducts.fulfilled,(state,action)=>{
+            let data=action.payload.data;
+            state.apiData=data;
+
+
+        });
+        builder.addCase(fetchProducts.rejected,(state,action)=>{
+
+        });
+
+        builder.addCase(fetchProducts.pending,(state,action)=>{
+
+        });
+
+        builder.addCase(fetchGoogleBooks.fulfilled,(state,action)=>{
+           // debugger;
+            let data=action.payload.data;
+            state.apiData=data;
+
+
+        });
+        builder.addCase(fetchGoogleBooks.rejected,(state,action)=>{
+
+        });
+
+        builder.addCase(fetchGoogleBooks.pending,(state,action)=>{
+
+        })
+
+
     }
 
 })
