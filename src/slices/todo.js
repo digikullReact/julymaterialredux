@@ -85,6 +85,7 @@ const todo=createSlice({
 
         });
         builder.addCase(fetchProducts.rejected,(state,action)=>{
+            // error hadling do iti
 
         });
 
